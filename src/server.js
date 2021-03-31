@@ -8,6 +8,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import { ApolloServer } from 'apollo-server-express'
+import { connectDB } from './config/mongoose.js'
 
 import typeDefs from './typeDefs/typeDefs.js'
 import resolvers from './resolvers/posts.js'
@@ -18,6 +19,7 @@ import resolvers from './resolvers/posts.js'
  * @returns {object} The server app.
  */
 const main = async () => {
+  await connectDB()
   // Start GraphQL Apollo server
   const server = new ApolloServer({ typeDefs, resolvers, playground: true, introspection: true })
   await server.start()

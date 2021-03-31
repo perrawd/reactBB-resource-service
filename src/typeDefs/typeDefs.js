@@ -13,6 +13,10 @@ const typeDefs = gql`
         getPosts: [Post]
     }
 
+    type Mutation {
+        addPost(title: String!, body: String!, author: String!)
+    }
+
     type Post {
         title: String
         body: String

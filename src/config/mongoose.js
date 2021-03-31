@@ -6,6 +6,7 @@
  */
 
 import mongoose from 'mongoose'
+
 /**
  * Establishes a connection to a database.
  *

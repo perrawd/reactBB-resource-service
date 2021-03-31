@@ -2,6 +2,7 @@
   "name": "reactbb-resource-service",
   "version": "1.0.0",
   "description": "Resource micro-service for reactBB",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node src/server.js",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@lnu/eslint-config": "^1.1.2",
+    "dotenv": "^8.2.0",
     "eslint": "^7.23.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^32.3.0",

@@ -9,8 +9,14 @@ import { gql } from 'apollo-server-express'
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
-type Query {
-hello: String
-}
+    type Query {
+        getPosts: [Post]
+    }
+
+    type Post {
+        title: String
+        body: String
+        author: String
+    }
 `
 export default typeDefs

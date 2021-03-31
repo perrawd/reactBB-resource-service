@@ -5,6 +5,8 @@
  * @version 1.0.0
  */
 
+import { Post } from '../models/post.js'
+
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
@@ -13,7 +15,14 @@ const resolvers = {
    *
    * @returns {object} The server app.
    */
-    hello: () => 'Hello world!'
+    async getPosts () {
+      try {
+        const posts = Post.find()
+        return posts
+      } catch (err) {
+        throw new Error(err)
+      }
+    }
   }
 }
 

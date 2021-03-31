@@ -25,4 +25,4 @@ const schema = new mongoose.Schema({
 })
 
 // Create a model using the schema.
-export const Image = mongoose.model('Image', schema)
+export const Post = mongoose.model('Post', schema)

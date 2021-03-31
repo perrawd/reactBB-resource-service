@@ -7,7 +7,9 @@
 
 import express from 'express'
 import helmet from 'helmet'
-import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
+
+import { typeDefs } from './typeDefs/typeDefs.js'
 
 /**
  * The main function of the application.
@@ -15,13 +17,6 @@ import { ApolloServer, gql } from 'apollo-server-express'
  * @returns {object} The server app.
  */
 const main = async () => {
-// Construct a schema, using GraphQL schema language
-  const typeDefs = gql`
-    type Query {
-    hello: String
-    }
-    `
-
   // Provide resolver functions for your schema fields
   const resolvers = {
     Query: {

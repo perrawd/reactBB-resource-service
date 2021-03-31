@@ -23,6 +23,23 @@ const resolvers = {
         throw new Error(err)
       }
     }
+  },
+  Mutation: {
+  /**
+   * Add post.
+   *
+   * @param {object} _ parent.
+   * @param {object} args object to create.
+   * @returns {object} The object.
+   */
+    addPost: async (_, args) => {
+      try {
+        const response = await Post.create(args)
+        return response
+      } catch (err) {
+        throw new Error(err)
+      }
+    }
   }
 }
 

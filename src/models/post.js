@@ -6,6 +6,7 @@
  */
 
 import mongoose from 'mongoose'
+
 // Create a schema.
 const schema = new mongoose.Schema({
   title: {

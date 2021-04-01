@@ -54,6 +54,26 @@ const resolvers = {
       } catch (err) {
         throw new Error(err)
       }
+    },
+    /**
+   * Add post.
+   *
+   * @param {object} _ parent.
+   * @param {object} args object to create.
+   * @returns {object} The object.
+   */
+    deletePost: async (_, args) => {
+      try {
+        const post = await Post.findOne({ _id: args.id })
+        post.remove()
+
+        return {
+          success: true,
+          message: 'Post deleted'
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
     }
   }
 }

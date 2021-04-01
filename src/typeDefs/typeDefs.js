@@ -16,6 +16,12 @@ const typeDefs = gql`
 
     type Mutation {
         addPost(title: String!, body: String!, author: String!): Post!
+        deletePost(id: ID!): UpdateResponse
+    }
+
+    type UpdateResponse {
+    success: Boolean!
+    message: String
     }
 
     type Post {

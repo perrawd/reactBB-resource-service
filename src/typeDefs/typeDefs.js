@@ -11,6 +11,7 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
     type Query {
         getPosts: [Post]
+        getPostByID(id: ID!): Post
     }
 
     type Mutation {

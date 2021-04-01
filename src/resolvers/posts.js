@@ -22,6 +22,21 @@ const resolvers = {
       } catch (err) {
         throw new Error(err)
       }
+    },
+    /**
+     * The main function of the application.
+     *
+     * @param {object} _ parent.
+     * @param {object} args object to search for.
+     * @returns {object} The server app.
+     */
+    async getPostByID (_, args) {
+      try {
+        const posts = Post.findById(args.id)
+        return posts
+      } catch (err) {
+        throw new Error(err)
+      }
     }
   },
   Mutation: {

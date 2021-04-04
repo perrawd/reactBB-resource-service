@@ -56,12 +56,12 @@ const resolvers = {
       }
     },
     /**
-   * Add post.
-   *
-   * @param {object} _ parent.
-   * @param {object} args object to create.
-   * @returns {object} The object.
-   */
+     * Delete post.
+     *
+     * @param {object} _ parent.
+     * @param {object} args object to create.
+     * @returns {object} The object.
+     */
     deletePost: async (_, args) => {
       try {
         const post = await Post.findOne({ _id: args.id })

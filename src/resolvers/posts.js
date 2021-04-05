@@ -68,16 +68,23 @@ const resolvers = {
      *
      * @param {object} _ parent.
      * @param {object} args object to create.
+     * @param {object} context object to create.
      * @returns {object} The object.
      */
-    deletePost: async (_, args) => {
+    deletePost: async (_, args, context) => {
       try {
+        const user = authUser(context)
         const post = await Post.findOne({ _id: args.id })
-        post.remove()
 
-        return {
-          success: true,
-          message: 'Post deleted'
+        if (post.author === user) {
+          post.remove()
+
+          return {
+            success: true,
+            message: 'Post deleted'
+          }
+        } else {
+          throw new AuthenticationError('Action not allowed')
         }
       } catch (err) {
         throw new Error(err)

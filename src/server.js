@@ -27,7 +27,16 @@ const main = async () => {
     resolvers,
     playground: true,
     introspection: true,
-    validationRules: [depthLimit(7)]
+    validationRules: [depthLimit(7)],
+    /**
+     * Access req and res in context.
+     *
+     * @param {object} args server app.
+     * @param {object} args.req The request.
+     * @param {object} args.res The res.
+     * @returns {object} The req and res.
+     */
+    context: ({ req, res }) => ({ req, res })
   })
   await server.start()
 

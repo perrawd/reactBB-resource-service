@@ -5,7 +5,10 @@
  * @version 1.0.0
  */
 
+import fs from 'fs'
+import jwt from 'jsonwebtoken'
 import { Post } from '../models/post.js'
+import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
 const resolvers = {
@@ -45,11 +48,16 @@ const resolvers = {
    *
    * @param {object} _ parent.
    * @param {object} args object to create.
+   * @param {object} context object to create.
    * @returns {object} The object.
    */
-    addPost: async (_, args) => {
+    addPost: async (_, args, context) => {
       try {
-        const response = await Post.create(args)
+        const user = authUser(context)
+        const response = await Post.create({
+          ...args,
+          author: user
+        })
         return response
       } catch (err) {
         throw new Error(err)
@@ -75,6 +83,24 @@ const resolvers = {
         throw new Error(err)
       }
     }
+  }
+}
+
+/**
+ * Auth user.
+ *
+ * @param {object} context the context.
+ * @returns {object} The user.
+ */
+const authUser = (context) => {
+  try {
+    const authorization = context.req.headers.authorization?.split(' ')
+    const publicKey = fs.readFileSync(process.env.KEY_PATH, 'utf8')
+    const payload = jwt.verify(authorization[1], publicKey)
+
+    return payload.sub
+  } catch (error) {
+    throw new AuthenticationError(error)
   }
 }
 

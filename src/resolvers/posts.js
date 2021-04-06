@@ -14,7 +14,7 @@ import { AuthenticationError } from 'apollo-server-express'
 const resolvers = {
   Query: {
   /**
-   * The main function of the application.
+   * Get all posts.
    *
    * @returns {object} The server app.
    */
@@ -27,7 +27,7 @@ const resolvers = {
       }
     },
     /**
-     * The main function of the application.
+     * Get a specific post.
      *
      * @param {object} _ parent.
      * @param {object} args object to search for.

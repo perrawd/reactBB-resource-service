@@ -8,6 +8,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import { ApolloServer } from 'apollo-server-express'
+import { buildFederatedSchema } from '@apollo/federation'
 import depthLimit from 'graphql-depth-limit'
 import { connectDB } from './config/mongoose.js'
 
@@ -23,8 +24,7 @@ const main = async () => {
   await connectDB()
   // Start GraphQL Apollo server
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildFederatedSchema([{ typeDefs, resolvers }]),
     playground: true,
     introspection: true,
     validationRules: [depthLimit(7)],

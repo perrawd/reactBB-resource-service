@@ -1,5 +1,5 @@
 /**
- * Mongoose model Post.
+ * Mongoose model Category.
  *
  * @author Per Rawdin
  * @version 1.0.0
@@ -16,10 +16,12 @@ const schema = new mongoose.Schema({
   subtitle: {
     type: String
   },
-  subcategories: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'SubCategory'
-  },
+  subcategories: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'SubCategory'
+    }
+  ],
   author: {
     type: String,
     required: true

@@ -1,5 +1,5 @@
 /**
- * Mongoose model Post.
+ * Mongoose model Subcategory.
  *
  * @author Per Rawdin
  * @version 1.0.0
@@ -20,9 +20,9 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
   },
-  posts: {
+  threads: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Post'
+    ref: 'Thread'
   },
   author: {
     type: String
@@ -32,4 +32,4 @@ const schema = new mongoose.Schema({
 })
 
 // Create a model using the schema.
-export const Post = mongoose.model('Category', schema)
+export const Post = mongoose.model('Subcategory', schema)

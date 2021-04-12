@@ -25,7 +25,6 @@ export const main = async () => {
   // Start GraphQL Apollo server
   const server = new ApolloServer({
     schema: buildFederatedSchema([{ typeDefs, resolvers }]),
-    mocks: true,
     playground: true,
     introspection: true,
     validationRules: [depthLimit(7)],

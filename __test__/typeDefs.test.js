@@ -1,6 +1,6 @@
-import { test, expect } from '@jest/globals'
-import { gql } from 'apollo-server-express'
-import typeDefs from '../src/typeDefs/typeDefs.js'
+const { test, expect } = require('@jest/globals')
+const { gql } = require('apollo-server-express')
+const typeDefs = require('../src/typeDefs/typeDefs.js')
 
 test('Check if typeDefs has correct fields', () => {
   expect(typeDefs).toBe(

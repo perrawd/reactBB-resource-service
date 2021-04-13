@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 // Create a schema.
 const schema = new mongoose.Schema({
@@ -26,4 +26,5 @@ const schema = new mongoose.Schema({
 })
 
 // Create a model using the schema.
-export const Post = mongoose.model('Post', schema)
+const Post = mongoose.model('Post', schema)
+module.exports = Post

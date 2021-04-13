@@ -5,10 +5,10 @@
  * @version 1.0.0
  */
 
-import fs from 'fs'
-import jwt from 'jsonwebtoken'
-import { Post } from '../models/post.js'
-import { AuthenticationError } from 'apollo-server-express'
+const fs = require('fs')
+const jwt = require('jsonwebtoken')
+const { Post } = require('../models/post.js')
+const { AuthenticationError } = require('apollo-server-express')
 
 // Provide resolver functions for your schema fields
 const resolvers = {
@@ -111,4 +111,4 @@ const authUser = (context) => {
   }
 }
 
-export default resolvers
+module.exports = resolvers

@@ -13,7 +13,7 @@ import depthLimit from 'graphql-depth-limit'
 import { connectDB } from './config/mongoose.js'
 
 import typeDefs from './typeDefs/typeDefs.js'
-import resolvers from './resolvers/posts.js'
+import resolvers from './resolvers/index.js'
 
 /**
  * The main function of the application.

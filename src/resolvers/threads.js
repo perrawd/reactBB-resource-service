@@ -7,20 +7,20 @@
 
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import { Post } from '../models/post.js'
+import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
-const postResolvers = {
+const threadsResolvers = {
   Query: {
   /**
-   * Get all posts.
+   * Get all Threads.
    *
    * @returns {object} The server app.
    */
-    async getPosts () {
+    async getThreads () {
       try {
-        const posts = Post.find()
+        const posts = Thread.find()
         return posts
       } catch (err) {
         throw new Error(err)
@@ -33,10 +33,10 @@ const postResolvers = {
      * @param {object} args object to search for.
      * @returns {object} The server app.
      */
-    async getPostByID (_, args) {
+    async getThreadByID (_, args) {
       try {
-        const posts = Post.findById(args.id)
-        return posts
+        const thread = Thread.findById(args.id)
+        return thread
       } catch (err) {
         throw new Error(err)
       }
@@ -51,10 +51,10 @@ const postResolvers = {
    * @param {object} context object to create.
    * @returns {object} The object.
    */
-    addPost: async (_, args, context) => {
+    addThread: async (_, args, context) => {
       try {
         const user = authUser(context)
-        const response = await Post.create({
+        const response = await Thread.create({
           ...args,
           author: user
         })
@@ -71,17 +71,17 @@ const postResolvers = {
      * @param {object} context object to create.
      * @returns {object} The object.
      */
-    deletePost: async (_, args, context) => {
+    deleteThread: async (_, args, context) => {
       try {
         const user = authUser(context)
-        const post = await Post.findOne({ _id: args.id })
+        const thread = await Thread.findOne({ _id: args.id })
 
-        if (post.author === user) {
-          post.remove()
+        if (thread.author === user) {
+          thread.remove()
 
           return {
             success: true,
-            message: 'Post deleted'
+            message: 'Thread deleted'
           }
         } else {
           throw new AuthenticationError('Action not allowed')
@@ -111,4 +111,4 @@ const authUser = (context) => {
   }
 }
 
-export default postResolvers
+export default threadsResolvers

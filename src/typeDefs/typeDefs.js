@@ -11,12 +11,14 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
     extend type Query {
         getPosts: [Post]
+        getThreads: [Thread]
         getPostByID(id: ID!): Post
     }
 
     type Mutation {
         addPost(title: String!, body: String!): Post!
         deletePost(id: ID!): UpdateResponse!
+        addThread(title: String!, body: String!): Thread!
     }
 
     type UpdateResponse {
@@ -25,6 +27,12 @@ const typeDefs = gql`
     }
 
     type Post @key(fields: "title") {
+        title: String!
+        body: String!
+        author: String!
+    }
+
+    type Thread @key(fields: "title") {
         title: String!
         body: String!
         author: String!

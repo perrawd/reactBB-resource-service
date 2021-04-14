@@ -35,4 +35,4 @@ const schema = new mongoose.Schema({
 })
 
 // Create a model using the schema.
-export const Post = mongoose.model('Thread', schema)
+export const Thread = mongoose.model('Thread', schema)

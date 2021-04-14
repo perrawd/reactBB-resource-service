@@ -1,5 +1,5 @@
 /**
- * GraphQL posts resolver.
+ * GraphQL threads resolver.
  *
  * @author Per Rawdin
  * @version 1.0.0
@@ -8,6 +8,7 @@
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import { Thread } from '../models/thread.js'
+import { Post } from '../models/post.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
@@ -53,6 +54,7 @@ const threadsResolvers = {
    */
     addThread: async (_, args, context) => {
       try {
+        console.log('thread test')
         const user = authUser(context)
         const response = await Thread.create({
           ...args,
@@ -88,6 +90,24 @@ const threadsResolvers = {
         }
       } catch (err) {
         throw new Error(err)
+      }
+    }
+  },
+  Thread: {
+    /**
+     * Return object of posts.
+     *
+     * @param {object} parent object to create.
+     * @returns {object} The object.
+     */
+    posts: async (parent) => {
+      try {
+        console.log('Testing post array: ' + parent.id)
+        const posts = await Post.find()
+        console.log(posts)
+        return posts
+      } catch (error) {
+        console.error(error)
       }
     }
   }

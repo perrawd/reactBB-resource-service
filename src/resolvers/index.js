@@ -9,6 +9,9 @@ const resolvers = {
   Mutation: {
     ...postResolvers.Mutation,
     ...threadsResolvers.Mutation
+  },
+  Thread: {
+    ...threadsResolvers.Thread
   }
 }
 

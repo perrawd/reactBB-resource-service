@@ -12,13 +12,14 @@ const typeDefs = gql`
     extend type Query {
         getPosts: [Post]
         getThreads: [Thread]
+        getThreadByID(id: ID!): Thread
         getPostByID(id: ID!): Post
     }
 
     type Mutation {
         addPost(title: String!, body: String!): Post!
         deletePost(id: ID!): UpdateResponse!
-        addThread(title: String!, body: String!): Thread!
+        addThread(title: String!, body: String!, subcategory: String): Thread!
     }
 
     type UpdateResponse {
@@ -26,15 +27,19 @@ const typeDefs = gql`
     message: String!
     }
 
-    type Post @key(fields: "title") {
+    type Post @key(fields: "id") {
+        id: ID!
         title: String!
         body: String!
         author: String!
     }
 
-    type Thread @key(fields: "title") {
+    type Thread @key(fields: "id") {
+        id: ID!
         title: String!
         body: String!
+        subcategory: String!
+        posts: [Post]
         author: String!
     }
 `

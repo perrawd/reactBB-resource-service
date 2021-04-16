@@ -99,7 +99,7 @@ const categoryResolvers = {
      * @param {object} parent parent.
      * @returns {object} The object.
      */
-    subCategories: async (parent) => {
+    SubCategories: async (parent) => {
       try {
         const subCategories = await Subcategory.find()
         return subCategories

@@ -1,5 +1,5 @@
 /**
- * GraphQL threads resolver.
+ * GraphQL Threads resolver.
  *
  * @author Per Rawdin
  * @version 1.0.0
@@ -28,7 +28,7 @@ const threadsResolvers = {
       }
     },
     /**
-     * Get a specific post.
+     * Get a specific thread.
      *
      * @param {object} _ parent.
      * @param {object} args object to search for.
@@ -45,7 +45,7 @@ const threadsResolvers = {
   },
   Mutation: {
   /**
-   * Add post.
+   * Add Thread.
    *
    * @param {object} _ parent.
    * @param {object} args object to create.
@@ -66,7 +66,7 @@ const threadsResolvers = {
       }
     },
     /**
-     * Delete post.
+     * Delete Thread.
      *
      * @param {object} _ parent.
      * @param {object} args object to create.

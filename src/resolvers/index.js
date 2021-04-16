@@ -1,17 +1,32 @@
-import postResolvers from './posts.js'
-import threadsResolvers from './threads.js'
+/**
+ * Endpoint for resolvers and mutations.
+ *
+ * @author Per Rawdin
+ * @version 1.0.0
+ */
 import categoryResolvers from './categories.js'
+import subcategoryResolvers from './subcategories.js'
+import threadsResolvers from './threads.js'
+import postResolvers from './posts.js'
 
 const resolvers = {
   Query: {
-    ...postResolvers.Query,
+    ...categoryResolvers.Query,
+    ...subcategoryResolvers.Query,
     ...threadsResolvers.Query,
-    ...categoryResolvers.Query
+    ...postResolvers.Query
   },
   Mutation: {
-    ...postResolvers.Mutation,
+    ...categoryResolvers.Mutation,
+    ...subcategoryResolvers.Mutation,
     ...threadsResolvers.Mutation,
-    ...categoryResolvers.Mutation
+    ...postResolvers.Mutation
+  },
+  Category: {
+    ...categoryResolvers.SubCategories
+  },
+  SubCategory: {
+    ...subcategoryResolvers.threads
   },
   Thread: {
     ...threadsResolvers.Thread

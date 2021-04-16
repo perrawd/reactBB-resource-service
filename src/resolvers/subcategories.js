@@ -6,13 +6,12 @@
  */
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import { Category } from '../models/category.js'
 import { Subcategory } from '../models/subcategory.js'
 import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
-const categoryResolvers = {
+const subcategoryResolvers = {
   Query: {
   /**
    * Get all SubCategories.
@@ -21,7 +20,7 @@ const categoryResolvers = {
    */
     async getSubCategory () {
       try {
-        const posts = Category.find()
+        const posts = Subcategory.find()
         return posts
       } catch (err) {
         throw new Error(err)
@@ -36,7 +35,7 @@ const categoryResolvers = {
      */
     async getSubCategoryByID (_, args) {
       try {
-        const category = Category.findById(args.id)
+        const category = Subcategory.findById(args.id)
         return category
       } catch (err) {
         throw new Error(err)
@@ -128,4 +127,4 @@ const authUser = (context) => {
   }
 }
 
-export default categoryResolvers
+export default subcategoryResolvers

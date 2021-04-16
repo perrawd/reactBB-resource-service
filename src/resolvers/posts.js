@@ -16,7 +16,7 @@ const postResolvers = {
   /**
    * Get all posts.
    *
-   * @returns {object} The server app.
+   * @returns {object} the posts.
    */
     async getPosts () {
       try {
@@ -30,7 +30,7 @@ const postResolvers = {
      * Get a specific post.
      *
      * @param {object} _ parent.
-     * @param {object} args object to search for.
+     * @param {object} args arguments.
      * @returns {object} The server app.
      */
     async getPostByID (_, args) {
@@ -47,9 +47,9 @@ const postResolvers = {
    * Add post.
    *
    * @param {object} _ parent.
-   * @param {object} args object to create.
-   * @param {object} context object to create.
-   * @returns {object} The object.
+   * @param {object} args arguments.
+   * @param {object} context context.
+   * @returns {object} The created post.
    */
     addPost: async (_, args, context) => {
       try {
@@ -58,7 +58,6 @@ const postResolvers = {
           ...args,
           author: user
         })
-        console.log(response)
         return response
       } catch (err) {
         throw new Error(err)
@@ -68,9 +67,9 @@ const postResolvers = {
      * Delete post.
      *
      * @param {object} _ parent.
-     * @param {object} args object to create.
-     * @param {object} context object to create.
-     * @returns {object} The object.
+     * @param {object} args arguments.
+     * @param {object} context context.
+     * @returns {object} a response.
      */
     deletePost: async (_, args, context) => {
       try {

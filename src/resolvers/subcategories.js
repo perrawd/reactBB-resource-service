@@ -1,5 +1,5 @@
 /**
- * GraphQL categories resolver.
+ * GraphQL SubCategories resolver.
  *
  * @author Per Rawdin
  * @version 1.0.0
@@ -8,32 +8,33 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import { Category } from '../models/category.js'
 import { Subcategory } from '../models/subcategory.js'
+import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
 const categoryResolvers = {
   Query: {
   /**
-   * Get all Categories.
+   * Get all SubCategories.
    *
    * @returns {object} The server app.
    */
-    async getCategory () {
+    async getSubCategory () {
       try {
-        const category = Category.find()
-        return category
+        const posts = Category.find()
+        return posts
       } catch (err) {
         throw new Error(err)
       }
     },
     /**
-     * Get a specific Category by ID.
+     * Get a specific SubCategory.
      *
      * @param {object} _ parent.
      * @param {object} args arguments.
-     * @returns {object} the category.
+     * @returns {object} The server app.
      */
-    async getCategoryByID (_, args) {
+    async getSubCategoryByID (_, args) {
       try {
         const category = Category.findById(args.id)
         return category
@@ -44,18 +45,17 @@ const categoryResolvers = {
   },
   Mutation: {
   /**
-   * Add Category.
+   * Add SubCategory.
    *
    * @param {object} _ parent.
    * @param {object} args arguments.
    * @param {object} context context.
-   * @returns {object} object.
+   * @returns {object} The object.
    */
-    addCategory: async (_, args, context) => {
+    addSubCategory: async (_, args, context) => {
       try {
-        console.log('Category test')
         const user = authUser(context)
-        const response = await Category.create({
+        const response = await Subcategory.create({
           ...args,
           author: user
         })
@@ -65,17 +65,17 @@ const categoryResolvers = {
       }
     },
     /**
-     * Delete Category.
+     * Delete SubCategory.
      *
      * @param {object} _ parent.
      * @param {object} args arguments.
      * @param {object} context context.
      * @returns {object} The object.
      */
-    deleteCategory: async (_, args, context) => {
+    deleteSubCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
-        const thread = await Category.findOne({ _id: args.id })
+        const thread = await Subcategory.findOne({ _id: args.id })
 
         if (thread.author === user) {
           thread.remove()
@@ -85,24 +85,24 @@ const categoryResolvers = {
             message: 'Thread deleted'
           }
         } else {
-          throw new AuthenticationError('Action notallowed')
+          throw new AuthenticationError('Actionnotallowed')
         }
       } catch (err) {
         throw new Error(err)
       }
     }
   },
-  Category: {
+  SubCategory: {
     /**
      * Return object of sub-categories.
      *
      * @param {object} parent parent.
      * @returns {object} The object.
      */
-    subCategories: async (parent) => {
+    threads: async (parent) => {
       try {
-        const subCategories = await Subcategory.find()
-        return subCategories
+        const threads = await Thread.find()
+        return threads
       } catch (error) {
         console.error(error)
       }
@@ -113,13 +113,13 @@ const categoryResolvers = {
 /**
  * Auth category.
  *
- * @param {object} context context.
+ * @param {object} context the context.
  * @returns {object} The user.
  */
 const authUser = (context) => {
   try {
-    const authorization = context.req.headers.authorization.split(' ')
-    const publicKey = fs.readFileSync(process.env.KEY_PATH, 'utf8')
+    const authorization = context.req.headersauthorization.split(' ')
+    const publicKey = fs.readFileSync(process.envKEY_PATH, 'utf8')
     const payload = jwt.verify(authorization[1], publicKey)
 
     return payload.sub

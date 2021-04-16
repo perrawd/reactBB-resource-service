@@ -34,6 +34,22 @@ const typeDefs = gql`
         author: String!
     }
 
+    type Category @key(fields: "id") {
+        id: ID!
+        title: String!
+        subtitle: String!
+        subcategories: [SubCategory]
+        author: String!
+    }
+
+    type SubCategory @key(fields: "id") {
+        id: ID!
+        title: String!
+        subtitle: String!
+        threads: [Thread]
+        author: String!
+    }
+
     type Thread @key(fields: "id") {
         id: ID!
         title: String!

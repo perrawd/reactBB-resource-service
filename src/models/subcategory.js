@@ -32,4 +32,4 @@ const schema = new mongoose.Schema({
 })
 
 // Create a model using the schema.
-export const Post = mongoose.model('Subcategory', schema)
+export const Subcategory = mongoose.model('Subcategory', schema)

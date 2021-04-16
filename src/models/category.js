@@ -31,4 +31,4 @@ const schema = new mongoose.Schema({
 })
 
 // Create a model using the schema.
-export const Post = mongoose.model('Category', schema)
+export const Category = mongoose.model('Category', schema)

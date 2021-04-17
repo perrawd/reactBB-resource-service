@@ -18,7 +18,7 @@ const categoryResolvers = {
    *
    * @returns {object} The server app.
    */
-    async getCategory () {
+    async getCategories () {
       try {
         const category = Category.find()
         return category

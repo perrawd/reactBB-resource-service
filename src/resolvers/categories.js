@@ -7,7 +7,6 @@
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import { Category } from '../models/category.js'
-import { Subcategory } from '../models/subcategory.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
@@ -75,17 +74,17 @@ const categoryResolvers = {
     deleteCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
-        const thread = await Category.findOne({ _id: args.id })
+        const category = await Category.findOne({ _id: args.id })
 
-        if (thread.author === user) {
-          thread.remove()
+        if (category.author === user) {
+          category.remove()
 
           return {
             success: true,
-            message: 'Thread deleted'
+            message: 'Category deleted'
           }
         } else {
-          throw new AuthenticationError('Action notallowed')
+          throw new AuthenticationError('Action not allowed')
         }
       } catch (err) {
         throw new Error(err)
@@ -94,15 +93,15 @@ const categoryResolvers = {
   },
   Category: {
     /**
-     * Return object of sub-categories.
+     * Return object of category.
      *
      * @param {object} parent parent.
      * @returns {object} The object.
      */
-    SubCategories: async (parent) => {
+    Category: async (parent) => {
       try {
-        const subCategories = await Subcategory.find()
-        return subCategories
+        const categories = await Category.find()
+        return categories
       } catch (error) {
         console.error(error)
       }
@@ -111,7 +110,7 @@ const categoryResolvers = {
 }
 
 /**
- * Auth category.
+ * Auth.
  *
  * @param {object} context context.
  * @returns {object} The user.

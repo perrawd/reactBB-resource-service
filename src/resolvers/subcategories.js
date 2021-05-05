@@ -7,7 +7,6 @@
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import { Subcategory } from '../models/subcategory.js'
-import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
@@ -20,8 +19,8 @@ const subcategoryResolvers = {
    */
     async getSubCategory () {
       try {
-        const posts = Subcategory.find()
-        return posts
+        const subcategories = Subcategory.find()
+        return subcategories
       } catch (err) {
         throw new Error(err)
       }
@@ -54,12 +53,16 @@ const subcategoryResolvers = {
     addSubCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
-        const response = await Subcategory.create({
+        await Subcategory.create({
           ...args,
           author: user
         })
-        return response
+        return {
+          success: true,
+          message: 'Subcategory added'
+        }
       } catch (err) {
+        console.error(err)
         throw new Error(err)
       }
     },
@@ -81,7 +84,7 @@ const subcategoryResolvers = {
 
           return {
             success: true,
-            message: 'Thread deleted'
+            message: 'SubCategory deleted'
           }
         } else {
           throw new AuthenticationError('Actionnotallowed')
@@ -91,38 +94,37 @@ const subcategoryResolvers = {
       }
     }
   },
-  SubCategory: {
-    /**
-     * Return object of sub-categories.
-     *
-     * @param {object} parent parent.
-     * @returns {object} The object.
-     */
-    threads: async (parent) => {
-      try {
-        const threads = await Thread.find()
-        return threads
-      } catch (error) {
-        console.error(error)
-      }
+  /**
+   * Return object of sub-categories.
+   *
+   * @param {object} parent parent.
+   * @returns {object} The object.
+   */
+  subCategories: async (parent) => {
+    try {
+      // const subCategories = await SubCategory.find()
+      // return subCategories
+    } catch (error) {
+      console.error(error)
     }
   }
 }
 
 /**
- * Auth category.
+ * Auth.
  *
- * @param {object} context the context.
+ * @param {object} context context.
  * @returns {object} The user.
  */
 const authUser = (context) => {
   try {
-    const authorization = context.req.headersauthorization.split(' ')
-    const publicKey = fs.readFileSync(process.envKEY_PATH, 'utf8')
+    const authorization = context.req.headers.authorization.split(' ')
+    const publicKey = fs.readFileSync(process.env.KEY_PATH, 'utf8')
     const payload = jwt.verify(authorization[1], publicKey)
 
     return payload.sub
   } catch (error) {
+    console.error(error)
     throw new AuthenticationError(error)
   }
 }

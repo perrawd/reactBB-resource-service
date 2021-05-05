@@ -8,7 +8,6 @@
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import { Thread } from '../models/thread.js'
-import { Post } from '../models/post.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
@@ -21,8 +20,8 @@ const threadsResolvers = {
    */
     async getThreads () {
       try {
-        const posts = Thread.find()
-        return posts
+        const threads = Thread.find()
+        return threads
       } catch (err) {
         throw new Error(err)
       }
@@ -95,17 +94,17 @@ const threadsResolvers = {
   },
   Thread: {
     /**
-     * Return object of posts.
+     * Return object of threads.
      *
      * @param {object} parent object to create.
      * @returns {object} The object.
      */
-    posts: async (parent) => {
+    threads: async (parent) => {
       try {
-        console.log('Testing post array: ' + parent.id)
-        const posts = await Post.find()
-        console.log(posts)
-        return posts
+        console.log('Testing threads array: ' + parent.id)
+        const threads = await Thread.find()
+        console.log(threads)
+        return threads
       } catch (error) {
         console.error(error)
       }

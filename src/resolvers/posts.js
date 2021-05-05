@@ -5,8 +5,7 @@
  * @version 1.0.0
  */
 
-import fs from 'fs'
-import jwt from 'jsonwebtoken'
+import authUser from '../utils/auth.js'
 import { Post } from '../models/post.js'
 import { AuthenticationError } from 'apollo-server-express'
 
@@ -90,24 +89,6 @@ const postResolvers = {
         throw new Error(err)
       }
     }
-  }
-}
-
-/**
- * Auth user.
- *
- * @param {object} context the context.
- * @returns {object} The user.
- */
-const authUser = (context) => {
-  try {
-    const authorization = context.req.headers.authorization?.split(' ')
-    const publicKey = fs.readFileSync(process.env.KEY_PATH, 'utf8')
-    const payload = jwt.verify(authorization[1], publicKey)
-
-    return payload.sub
-  } catch (error) {
-    throw new AuthenticationError(error)
   }
 }
 

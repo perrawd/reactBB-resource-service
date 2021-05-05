@@ -4,8 +4,7 @@
  * @author Per Rawdin
  * @version 1.0.0
  */
-import fs from 'fs'
-import jwt from 'jsonwebtoken'
+import authUser from '../utils/auth.js'
 import { Subcategory } from '../models/subcategory.js'
 import { AuthenticationError } from 'apollo-server-express'
 
@@ -107,25 +106,6 @@ const subcategoryResolvers = {
     } catch (error) {
       console.error(error)
     }
-  }
-}
-
-/**
- * Auth.
- *
- * @param {object} context context.
- * @returns {object} The user.
- */
-const authUser = (context) => {
-  try {
-    const authorization = context.req.headers.authorization.split(' ')
-    const publicKey = fs.readFileSync(process.env.KEY_PATH, 'utf8')
-    const payload = jwt.verify(authorization[1], publicKey)
-
-    return payload.sub
-  } catch (error) {
-    console.error(error)
-    throw new AuthenticationError(error)
   }
 }
 

@@ -16,7 +16,7 @@ const subcategoryResolvers = {
    *
    * @returns {object} The server app.
    */
-    async getSubCategory () {
+    async getSubCategories () {
       try {
         const subcategories = Subcategory.find()
         return subcategories

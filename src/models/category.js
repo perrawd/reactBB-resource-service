@@ -19,7 +19,7 @@ const schema = new mongoose.Schema({
   subcategories: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'SubCategory'
+      ref: 'Subcategory'
     }
   ],
   author: {

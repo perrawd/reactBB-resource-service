@@ -11,6 +11,7 @@ import { gql } from 'apollo-server-express'
 const typeDefs = gql`
     extend type Query {
         getCategories: [Category]
+        getCategoryByID(id: ID!): Category
         getSubCategories: [SubCategory]
         getThreads: [Thread]
         getPosts: [Post]
@@ -20,7 +21,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addCategory(title: String!, subtitle: String, author: String): Category!
+        addCategory(title: String!, subtitle: String, author: String, subcategories: [ID]): Category!
         deleteCategory(id: ID!): UpdateResponse!
         addSubCategory(title: String!, subtitle: String, author: String): UpdateResponse!
         deleteSubCategory(id: ID!): SubCategory!

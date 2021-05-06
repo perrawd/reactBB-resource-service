@@ -92,19 +92,14 @@ const categoryResolvers = {
     }
   },
   Category: {
-    /**
-     * Return object of category.
-     *
-     * @param {object} parent parent.
-     * @returns {object} The object.
-     */
-    Category: async (parent) => {
-      try {
-        const categories = await Category.find()
-        return categories
-      } catch (error) {
-        console.error(error)
-      }
+  /**
+   * Populate the subcategories objects.
+   *
+   * @param {object} category object.
+   * @returns {object} The object.
+   */
+    subcategories: async (category) => {
+      return (await category.populate('subcategories').execPopulate()).subcategories
     }
   }
 }

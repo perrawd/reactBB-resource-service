@@ -23,7 +23,7 @@ const resolvers = {
     ...postResolvers.Mutation
   },
   Category: {
-    ...categoryResolvers.SubCategories
+    ...categoryResolvers.Category
   },
   SubCategory: {
     ...subcategoryResolvers.threads

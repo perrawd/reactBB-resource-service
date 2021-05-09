@@ -95,18 +95,20 @@ const threadsResolvers = {
     /**
      * Return object of threads.
      *
-     * @param {object} parent object to create.
+     * @param {object} thread the parent.
      * @returns {object} The object.
      */
-    threads: async (parent) => {
-      try {
-        console.log('Testing threads array: ' + parent.id)
-        const threads = await Thread.find()
-        console.log(threads)
-        return threads
-      } catch (error) {
-        console.error(error)
-      }
+    subcategories: async (thread) => {
+      return (await thread.populate('subcategories').execPopulate()).subcategories
+    },
+    /**
+     * Return object of threads.
+     *
+     * @param {object} thread the parent.
+     * @returns {object} The object.
+     */
+    posts: async (thread) => {
+      return (await thread.populate('posts').execPopulate()).posts
     }
   }
 }

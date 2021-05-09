@@ -9,10 +9,6 @@ import mongoose from 'mongoose'
 
 // Create a schema.
 const schema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
   body: {
     type: String,
     required: true

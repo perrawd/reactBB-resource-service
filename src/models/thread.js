@@ -14,8 +14,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   body: {
-    type: String,
-    required: true
+    type: String
   },
   subcategory: {
     type: mongoose.Schema.Types.ObjectId,

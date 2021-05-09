@@ -93,18 +93,24 @@ const subcategoryResolvers = {
       }
     }
   },
-  /**
-   * Return object of sub-categories.
-   *
-   * @param {object} parent parent.
-   * @returns {object} The object.
-   */
-  subCategories: async (parent) => {
-    try {
-      // const subCategories = await SubCategory.find()
-      // return subCategories
-    } catch (error) {
-      console.error(error)
+  Subcategory: {
+    /**
+     * Return object of threads.
+     *
+     * @param {object} subcategory the parent.
+     * @returns {object} The object.
+     */
+    threads: async (subcategory) => {
+      return (await subcategory.populate('threads').execPopulate()).threads
+    },
+    /**
+     * Return object of threads.
+     *
+     * @param {object} subcategory the parent.
+     * @returns {object} The object.
+     */
+    category: async (subcategory) => {
+      return (await subcategory.populate('category').execPopulate()).category
     }
   }
 }

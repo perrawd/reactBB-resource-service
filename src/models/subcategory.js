@@ -20,10 +20,12 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category'
   },
-  threads: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Thread'
-  },
+  threads: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Thread'
+    }
+  ],
   author: {
     type: String
   }

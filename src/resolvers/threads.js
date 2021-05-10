@@ -8,6 +8,7 @@
 import authUser from '../utils/auth.js'
 import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
+import { Subcategory } from '../models/subcategory.js'
 
 // Provide resolver functions for your schema fields
 const threadsResolvers = {
@@ -58,6 +59,20 @@ const threadsResolvers = {
           ...args,
           author: user
         })
+          .then(async (res) => {
+            try {
+              console.log(res._id)
+              await Subcategory.findByIdAndUpdate('6092c54da48d5d3e6d224d92',
+                {
+                  $push: { threads: res._id }
+                },
+                { useFindAndModify: false }
+              )
+            } catch (err) {
+              console.error(err)
+            }
+          })
+
         return response
       } catch (err) {
         throw new Error(err)
@@ -98,8 +113,8 @@ const threadsResolvers = {
      * @param {object} thread the parent.
      * @returns {object} The object.
      */
-    subcategories: async (thread) => {
-      return (await thread.populate('subcategories').execPopulate()).subcategories
+    subcategory: async (thread) => {
+      return (await thread.populate('subcategory').execPopulate()).subcategory
     },
     /**
      * Return object of threads.

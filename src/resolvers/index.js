@@ -26,7 +26,7 @@ const resolvers = {
     ...categoryResolvers.Category
   },
   SubCategory: {
-    ...subcategoryResolvers.threads
+    ...subcategoryResolvers.Subcategory
   },
   Thread: {
     ...threadsResolvers.Thread

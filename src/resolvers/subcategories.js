@@ -6,6 +6,7 @@
  */
 import authUser from '../utils/auth.js'
 import { Subcategory } from '../models/subcategory.js'
+import { Category } from '../models/category.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
@@ -52,10 +53,18 @@ const subcategoryResolvers = {
     addSubCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
-        await Subcategory.create({
+        const response = await Subcategory.create({
           ...args,
           author: user
         })
+
+        await Category.findByIdAndUpdate(response.category,
+          {
+            $push: { subcategories: response._id }
+          },
+          { useFindAndModify: false }
+        )
+
         return {
           success: true,
           message: 'Subcategory added'

@@ -55,23 +55,18 @@ const threadsResolvers = {
       try {
         console.log('thread test')
         const user = authUser(context)
+
         const response = await Thread.create({
           ...args,
           author: user
         })
-          .then(async (res) => {
-            try {
-              console.log(res._id)
-              await Subcategory.findByIdAndUpdate('6092c54da48d5d3e6d224d92',
-                {
-                  $push: { threads: res._id }
-                },
-                { useFindAndModify: false }
-              )
-            } catch (err) {
-              console.error(err)
-            }
-          })
+
+        await Subcategory.findByIdAndUpdate(response.subcategory,
+          {
+            $push: { threads: response._id }
+          },
+          { useFindAndModify: false }
+        )
 
         return response
       } catch (err) {

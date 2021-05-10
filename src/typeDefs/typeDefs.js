@@ -23,9 +23,9 @@ const typeDefs = gql`
     type Mutation {
         addCategory(title: String!, subtitle: String, author: String, subcategories: [ID]): Category!
         deleteCategory(id: ID!): UpdateResponse!
-        addSubCategory(title: String!, subtitle: String, author: String, threads: String): UpdateResponse!
+        addSubCategory(title: String!, subtitle: String, author: String, category: String, threads: String): UpdateResponse!
         deleteSubCategory(id: ID!): SubCategory!
-        addThread(title: String!, body: String, subcategory: String, posts: String): Thread!
+        addThread(title: String!, subtitle: String, subcategory: String, posts: String): Thread
         deleteThread(id: ID!): UpdateResponse!
         addPost(body: String!, author: String!): Post!
         deletePost(id: ID!): UpdateResponse!
@@ -55,7 +55,7 @@ const typeDefs = gql`
     type Thread @key(fields: "id") {
         id: ID!
         title: String!
-        body: String!
+        subtitle: String!
         subcategory: String!
         posts: [Post]
         author: String!

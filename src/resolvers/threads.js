@@ -60,7 +60,6 @@ const threadsResolvers = {
           ...args,
           author: user
         })
-
         await Subcategory.findByIdAndUpdate(response.subcategory,
           {
             $push: { threads: response._id }

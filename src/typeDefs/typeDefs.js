@@ -27,7 +27,7 @@ const typeDefs = gql`
         deleteSubCategory(id: ID!): SubCategory!
         addThread(title: String!, subtitle: String, subcategory: String, posts: String): Thread
         deleteThread(id: ID!): UpdateResponse!
-        addPost(body: String!, author: String!): Post!
+        addPost(body: String!, author: String, thread: String): Post!
         deletePost(id: ID!): UpdateResponse!
     }
 
@@ -66,6 +66,7 @@ const typeDefs = gql`
         title: String
         body: String
         author: String
+        thread: String
     }
 `
 export default typeDefs

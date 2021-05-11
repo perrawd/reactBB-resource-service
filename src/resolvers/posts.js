@@ -7,6 +7,7 @@
 
 import authUser from '../utils/auth.js'
 import { Post } from '../models/post.js'
+import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
@@ -57,6 +58,14 @@ const postResolvers = {
           ...args,
           author: user
         })
+
+        await Thread.findByIdAndUpdate(response.thread,
+          {
+            $push: { posts: response._id }
+          },
+          { useFindAndModify: false }
+        )
+
         return response
       } catch (err) {
         throw new Error(err)

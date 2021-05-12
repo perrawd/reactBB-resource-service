@@ -55,10 +55,10 @@ const threadsResolvers = {
       try {
         console.log('thread test')
         const user = authUser(context)
-
+        console.log(user)
         const response = await Thread.create({
           ...args,
-          author: user
+          author: user.username
         })
         await Subcategory.findByIdAndUpdate(response.subcategory,
           {

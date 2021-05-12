@@ -13,7 +13,7 @@ import { AuthenticationError } from 'apollo-server-express'
 // Provide resolver functions for your schema fields
 const postResolvers = {
   Query: {
-  /**
+    /**
    * Get all posts.
    *
    * @returns {object} the posts.
@@ -43,7 +43,7 @@ const postResolvers = {
     }
   },
   Mutation: {
-  /**
+    /**
    * Add post.
    *
    * @param {object} _ parent.
@@ -56,10 +56,11 @@ const postResolvers = {
         const user = authUser(context)
         const response = await Post.create({
           ...args,
-          author: user
+          author: user.username
         })
 
-        await Thread.findByIdAndUpdate(response.thread,
+        await Thread.findByIdAndUpdate(
+          response.thread,
           {
             $push: { posts: response._id }
           },
@@ -67,6 +68,31 @@ const postResolvers = {
         )
 
         return response
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    /**
+     * Update post.
+     *
+     * @param {object} _ parent.
+     * @param {object} args arguments.
+     * @param {object} context context.
+     * @returns {object} The created post.
+     */
+    editPost: async (_, args, context) => {
+      try {
+        authUser(context)
+        await Post.updateOne(
+          { _id: args.id },
+          {
+            ...args
+          })
+
+        return {
+          success: true,
+          message: 'Post updated'
+        }
       } catch (err) {
         throw new Error(err)
       }

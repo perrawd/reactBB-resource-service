@@ -28,6 +28,7 @@ const typeDefs = gql`
         addThread(title: String!, subtitle: String, subcategory: String, posts: String): Thread
         deleteThread(id: ID!): UpdateResponse!
         addPost(body: String!, author: String, thread: String): Post!
+        editPost(id: ID!, body: String!, thread: String): UpdateResponse!
         deletePost(id: ID!): UpdateResponse!
     }
 
@@ -42,6 +43,8 @@ const typeDefs = gql`
         subtitle: String!
         subcategories: [SubCategory]
         author: String!
+        createdAt: String
+        updatedAt: String
     }
 
     type SubCategory @key(fields: "id") {
@@ -50,6 +53,8 @@ const typeDefs = gql`
         subtitle: String!
         threads: [Thread]
         author: String!
+        createdAt: String
+        updatedAt: String
     }
 
     type Thread @key(fields: "id") {
@@ -59,6 +64,8 @@ const typeDefs = gql`
         subcategory: String!
         posts: [Post]
         author: String!
+        createdAt: String
+        updatedAt: String
     }
 
     type Post @key(fields: "id") {
@@ -67,6 +74,8 @@ const typeDefs = gql`
         body: String
         author: String
         thread: String
+        createdAt: String
+        updatedAt: String
     }
 `
 export default typeDefs

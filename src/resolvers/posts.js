@@ -8,7 +8,9 @@
 import authUser from '../utils/auth.js'
 import { Post } from '../models/post.js'
 import { Thread } from '../models/thread.js'
-import { AuthenticationError } from 'apollo-server-express'
+import { AuthenticationError, PubSub } from 'apollo-server-express'
+
+const pubsub = new PubSub()
 
 // Provide resolver functions for your schema fields
 const postResolvers = {
@@ -67,6 +69,8 @@ const postResolvers = {
           { useFindAndModify: false }
         )
 
+        pubsub.publish('POST_CREATED', { postCreated: response })
+
         return response
       } catch (err) {
         throw new Error(err)
@@ -124,6 +128,16 @@ const postResolvers = {
       } catch (err) {
         throw new Error(err)
       }
+    }
+  },
+  Subscription: {
+    postCreated: {
+    /**
+     * Subscription post.
+     *
+     * @returns {object} a response.
+     */
+      subscribe: () => pubsub.asyncIterator(['POST_CREATED'])
     }
   }
 }

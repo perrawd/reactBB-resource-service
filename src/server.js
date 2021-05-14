@@ -14,6 +14,8 @@ import { connectDB } from './config/mongoose.js'
 
 import typeDefs from './typeDefs/typeDefs.js'
 import resolvers from './resolvers/index.js'
+import cors from 'cors'
+import http from 'http'
 
 /**
  * The main function of the application.
@@ -25,6 +27,15 @@ const main = async () => {
   // Start GraphQL Apollo server
   const server = new ApolloServer({
     schema: buildFederatedSchema([{ typeDefs, resolvers }]),
+    subscriptions: {
+      path: '/subscriptions',
+      onConnect: (connectionParams, webSocket, context) => {
+        console.log('Client connected')
+      },
+      onDisconnect: (webSocket, context) => {
+        console.log('Client disconnected')
+      }
+    },
     playground: true,
     introspection: true,
     validationRules: [depthLimit(7)],
@@ -48,6 +59,8 @@ const main = async () => {
       ? undefined
       : false
   }))
+
+  app.use(cors())
 
   // Error handler.
   app.use(function (err, req, res, next) {
@@ -76,11 +89,13 @@ const main = async () => {
   })
 
   server.applyMiddleware({ app })
+  const httpServer = http.createServer(app)
+  server.installSubscriptionHandlers(httpServer)
 
-  await new Promise(resolve => app.listen({ port: `${process.env.PORT}` }, resolve))
+  await new Promise(resolve => httpServer.listen({ port: `${process.env.PORT}` }, resolve))
   console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
-
-  return { server, app }
+  console.log(`🚀 Subscription endpoint ready at ws://localhost:${process.env.PORT}${server.subscriptionsPath}`)
+  return { server, app, httpServer }
 }
 
 main().catch(console.error)

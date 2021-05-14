@@ -32,6 +32,10 @@ const typeDefs = gql`
         deletePost(id: ID!): UpdateResponse!
     }
 
+    type Subscription {
+        postCreated: Post
+    }
+
     type UpdateResponse {
         success: Boolean!
         message: String!

@@ -22,6 +22,9 @@ const resolvers = {
     ...threadsResolvers.Mutation,
     ...postResolvers.Mutation
   },
+  Subscription: {
+    ...postResolvers.Subscription
+  },
   Category: {
     ...categoryResolvers.Category
   },

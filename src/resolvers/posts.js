@@ -108,9 +108,10 @@ const postResolvers = {
     deletePost: async (_, args, context) => {
       try {
         const user = authUser(context)
+        console.log(user)
         const post = await Post.findOne({ _id: args.id })
 
-        if (post.author === user) {
+        if (post.author === user.username) {
           post.remove()
 
           return {

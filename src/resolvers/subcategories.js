@@ -55,7 +55,7 @@ const subcategoryResolvers = {
         const user = authUser(context)
         const response = await Subcategory.create({
           ...args,
-          author: user
+          author: user.id
         })
 
         await Category.findByIdAndUpdate(response.category,
@@ -87,7 +87,7 @@ const subcategoryResolvers = {
         const user = authUser(context)
         const thread = await Subcategory.findOne({ _id: args.id })
 
-        if (thread.author === user) {
+        if (thread.author === user.id) {
           thread.remove()
 
           return {

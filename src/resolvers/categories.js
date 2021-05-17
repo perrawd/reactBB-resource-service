@@ -56,7 +56,7 @@ const categoryResolvers = {
         const user = authUser(context)
         const response = await Category.create({
           ...args,
-          author: user
+          author: user.id
         })
         return response
       } catch (err) {
@@ -74,9 +74,10 @@ const categoryResolvers = {
     deleteCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
+        console.log(user)
         const category = await Category.findOne({ _id: args.id })
 
-        if (category.author === user) {
+        if (category.author === user.id) {
           category.remove()
 
           return {

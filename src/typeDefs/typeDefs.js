@@ -52,6 +52,7 @@ const typeDefs = gql`
         title: String!
         subtitle: String!
         threads: [Thread]
+        threadCount: Int
         author: String!
         createdAt: String
         updatedAt: String

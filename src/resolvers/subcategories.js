@@ -35,11 +35,10 @@ const subcategoryResolvers = {
      */
     async getSubCategoryByID (_, args) {
       try {
-        const category = Subcategory.findOne({ _id: args.id })
+        const subcategory = Subcategory.findOne({ _id: args.id })
         // const category = Subcategory.findById(args.id)
-        console.log((await category).toObject())
-        console.log((await category).toJSON().threadCount)
-        return category
+        console.log((await subcategory).toObject())
+        return subcategory
       } catch (err) {
         throw new Error(err)
       }

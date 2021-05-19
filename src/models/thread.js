@@ -30,7 +30,13 @@ const schema = new mongoose.Schema({
     type: String
   }
 }, {
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
   timestamps: true
+})
+
+schema.virtual('postCount').get(function () {
+  return this.posts.length
 })
 
 // Create a model using the schema.

@@ -64,6 +64,7 @@ const typeDefs = gql`
         subtitle: String!
         subcategory: String!
         posts: [Post]
+        postCount: Int
         author: String!
         createdAt: String
         updatedAt: String

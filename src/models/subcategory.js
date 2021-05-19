@@ -39,5 +39,18 @@ schema.virtual('threadCount').get(function () {
   return this.threads.length
 })
 
+schema.virtual('last').get(function () {
+  return this.threads[this.threads.length - 1]
+})
+
+schema.virtual('latestThread', {
+  ref: 'Thread',
+  localField: schema.virtual('last').get(function () {
+    return this.threads[this.threads.length - 1]
+  }),
+  foreignField: '_id',
+  justOne: true
+})
+
 // Create a model using the schema.
 export const Subcategory = mongoose.model('Subcategory', schema)

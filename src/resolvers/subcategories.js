@@ -88,10 +88,10 @@ const subcategoryResolvers = {
     deleteSubCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
-        const thread = await Subcategory.findOne({ _id: args.id })
+        const subcategory = await Subcategory.findOne({ _id: args.id })
 
-        if (thread.author === user.id) {
-          thread.remove()
+        if (subcategory.author === user.id) {
+          subcategory.remove()
 
           return {
             success: true,

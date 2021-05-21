@@ -22,6 +22,7 @@ const typeDefs = gql`
 
     type Mutation {
         addCategory(title: String!, subtitle: String, author: String, subcategories: [ID]): Category!
+        editCategory(id: ID!, title: String, subtitle: String): UpdateResponse!
         deleteCategory(id: ID!): UpdateResponse!
         addSubCategory(title: String!, subtitle: String, author: String, category: String, threads: String): UpdateResponse!
         deleteSubCategory(id: ID!): SubCategory!

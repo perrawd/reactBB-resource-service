@@ -64,6 +64,31 @@ const categoryResolvers = {
       }
     },
     /**
+     * Update category.
+     *
+     * @param {object} _ parent.
+     * @param {object} args arguments.
+     * @param {object} context context.
+     * @returns {object} Response object.
+     */
+    editCategory: async (_, args, context) => {
+      try {
+        authUser(context)
+        await Category.updateOne(
+          { _id: args.id },
+          {
+            ...args
+          })
+
+        return {
+          success: true,
+          message: 'Category updated'
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    /**
      * Delete Category.
      *
      * @param {object} _ parent.

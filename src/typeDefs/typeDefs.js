@@ -24,8 +24,9 @@ const typeDefs = gql`
         addCategory(title: String!, subtitle: String, author: String, subcategories: [ID]): Category!
         editCategory(id: ID!, title: String, subtitle: String): UpdateResponse!
         deleteCategory(id: ID!): UpdateResponse!
-        addSubCategory(title: String!, subtitle: String, author: String, category: String, threads: String): UpdateResponse!
-        deleteSubCategory(id: ID!): SubCategory!
+        addSubCategory(title: String!, subtitle: String, author: String, category: ID, threads: String): UpdateResponse!
+        editSubcategory(id: ID!, title: String, subtitle: String): UpdateResponse!
+        deleteSubcategory(id: ID!): UpdateResponse!
         addThread(title: String!, subtitle: String, subcategory: String, posts: String): Thread
         deleteThread(id: ID!): UpdateResponse!
         addPost(body: String!, author: String, thread: String): Post!

@@ -7,7 +7,6 @@
 import authUser from '../utils/auth.js'
 import { Subcategory } from '../models/subcategory.js'
 import { Category } from '../models/category.js'
-import { AuthenticationError } from 'apollo-server-express'
 
 // Provide resolver functions for your schema fields
 const subcategoryResolvers = {
@@ -78,6 +77,31 @@ const subcategoryResolvers = {
       }
     },
     /**
+     * Update category.
+     *
+     * @param {object} _ parent.
+     * @param {object} args arguments.
+     * @param {object} context context.
+     * @returns {object} Response object.
+     */
+    editSubcategory: async (_, args, context) => {
+      try {
+        authUser(context)
+        await Subcategory.updateOne(
+          { _id: args.id },
+          {
+            ...args
+          })
+
+        return {
+          success: true,
+          message: 'Subcategory updated'
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    /**
      * Delete SubCategory.
      *
      * @param {object} _ parent.
@@ -85,20 +109,16 @@ const subcategoryResolvers = {
      * @param {object} context context.
      * @returns {object} The object.
      */
-    deleteSubCategory: async (_, args, context) => {
+    deleteSubcategory: async (_, args, context) => {
       try {
-        const user = authUser(context)
+        authUser(context)
         const subcategory = await Subcategory.findOne({ _id: args.id })
 
-        if (subcategory.author === user.id) {
-          subcategory.remove()
+        subcategory.remove()
 
-          return {
-            success: true,
-            message: 'SubCategory deleted'
-          }
-        } else {
-          throw new AuthenticationError('Actionnotallowed')
+        return {
+          success: true,
+          message: 'SubCategory deleted'
         }
       } catch (err) {
         throw new Error(err)

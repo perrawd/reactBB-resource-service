@@ -18,7 +18,8 @@ const schema = new mongoose.Schema({
     required: true
   },
   thread: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Thread'
   }
 }, {
   timestamps: true

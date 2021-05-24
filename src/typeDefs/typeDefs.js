@@ -77,7 +77,7 @@ const typeDefs = gql`
         title: String
         body: String
         author: String
-        thread: String
+        thread: Thread
         createdAt: String
         updatedAt: String
     }

@@ -30,6 +30,9 @@ const resolvers = {
   },
   Thread: {
     ...threadsResolvers.Thread
+  },
+  Post: {
+    ...postResolvers.Post
   }
 }
 

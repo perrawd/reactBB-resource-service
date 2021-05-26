@@ -20,6 +20,10 @@ const schema = new mongoose.Schema({
   thread: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Thread'
+  },
+  replyto: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
   }
 }, {
   timestamps: true

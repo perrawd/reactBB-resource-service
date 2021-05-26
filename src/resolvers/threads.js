@@ -9,6 +9,7 @@ import authUser from '../utils/auth.js'
 import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 import { Subcategory } from '../models/subcategory.js'
+import { Post } from '../models/post.js'
 
 // Provide resolver functions for your schema fields
 const threadsResolvers = {
@@ -60,6 +61,12 @@ const threadsResolvers = {
           ...args,
           author: user.username
         })
+        await Post.findByIdAndUpdate(response.posts,
+          {
+            $set: { thread: response._id }
+          },
+          { useFindAndModify: false }
+        )
         await Subcategory.findByIdAndUpdate(response.subcategory,
           {
             $push: { threads: response._id }

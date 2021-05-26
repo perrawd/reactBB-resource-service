@@ -29,7 +29,7 @@ const typeDefs = gql`
         deleteSubcategory(id: ID!): UpdateResponse!
         addThread(title: String!, subtitle: String, subcategory: String, posts: String): Thread
         deleteThread(id: ID!): UpdateResponse!
-        addPost(body: String!, author: String, thread: String): Post!
+        addPost(body: String!, author: String, thread: String, replyto: ID): Post!
         editPost(id: ID!, body: String!, thread: String): UpdateResponse!
         deletePost(id: ID!): UpdateResponse!
     }
@@ -53,6 +53,7 @@ const typeDefs = gql`
         id: ID!
         title: String!
         subtitle: String!
+        category: Category
         threads: [Thread]
         threadCount: Int
         author: String!
@@ -64,7 +65,7 @@ const typeDefs = gql`
         id: ID!
         title: String!
         subtitle: String!
-        subcategory: String!
+        subcategory: SubCategory
         posts: [Post]
         postCount: Int
         author: String!
@@ -78,6 +79,7 @@ const typeDefs = gql`
         body: String
         author: String
         thread: Thread
+        replyto: Post
         createdAt: String
         updatedAt: String
     }

@@ -125,6 +125,26 @@ const postResolvers = {
         throw new Error(err)
       }
     }
+  },
+  Post: {
+    /**
+     * Return object of threads.
+     *
+     * @param {object} post the parent.
+     * @returns {object} The object.
+     */
+    thread: async (post) => {
+      return (await post.populate('thread').execPopulate()).thread
+    },
+    /**
+     * Return object of threads.
+     *
+     * @param {object} subcategory the parent.
+     * @returns {object} The object.
+     */
+    replyto: async (subcategory) => {
+      return (await subcategory.populate('replyto').execPopulate()).replyto
+    }
   }
 }
 

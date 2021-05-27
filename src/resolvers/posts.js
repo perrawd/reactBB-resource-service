@@ -59,6 +59,16 @@ const postResolvers = {
           author: user.username
         })
 
+        if (args.replyto !== null || args.replyto !== null) {
+          await Post.findByIdAndUpdate(
+            response.replyto,
+            {
+              $inc: { replies: 1 }
+            },
+            { useFindAndModify: false }
+          )
+        }
+
         await Thread.findByIdAndUpdate(
           response.thread,
           {

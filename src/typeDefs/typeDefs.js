@@ -80,6 +80,7 @@ const typeDefs = gql`
         author: String
         thread: Thread
         replyto: Post
+        replies: Int
         createdAt: String
         updatedAt: String
     }

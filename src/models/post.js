@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Thread'
   },
+  replies: {
+    type: Number,
+    default: 0
+  },
   replyto: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'

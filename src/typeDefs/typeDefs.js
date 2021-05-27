@@ -30,6 +30,7 @@ const typeDefs = gql`
         addThread(title: String!, subtitle: String, subcategory: String, posts: String): Thread
         deleteThread(id: ID!): UpdateResponse!
         addPost(body: String!, author: String, thread: String, replyto: ID): Post!
+        addLikes(id: ID!): UpdateResponse!
         editPost(id: ID!, body: String!, thread: String): UpdateResponse!
         deletePost(id: ID!): UpdateResponse!
     }

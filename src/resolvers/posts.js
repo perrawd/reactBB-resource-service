@@ -59,7 +59,7 @@ const postResolvers = {
           author: user.username
         })
 
-        if (args.replyto !== null || args.replyto !== null) {
+        if (args.replyto !== null || args.replyto !== undefined) {
           await Post.findByIdAndUpdate(
             response.replyto,
             {
@@ -130,6 +130,35 @@ const postResolvers = {
           }
         } else {
           throw new AuthenticationError('Action not allowed')
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    /**
+     * Add Likes.
+     *
+     * @param {object} _ parent.
+     * @param {object} args arguments.
+     * @param {object} context context.
+     * @returns {object} a response.
+     */
+    addLikes: async (_, args, context) => {
+      try {
+        const user = authUser(context)
+        console.log(user)
+        console.log(args)
+        await Post.findByIdAndUpdate(
+          args.id,
+          {
+            $push: { likes: user.username }
+          },
+          { useFindAndModify: false }
+        )
+
+        return {
+          success: true,
+          message: 'Like added'
         }
       } catch (err) {
         throw new Error(err)

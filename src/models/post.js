@@ -28,7 +28,12 @@ const schema = new mongoose.Schema({
   replyto: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'
-  }
+  },
+  likes: [
+    {
+      username: String
+    }
+  ]
 }, {
   timestamps: true
 })

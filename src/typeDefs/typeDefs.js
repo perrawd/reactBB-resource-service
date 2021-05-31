@@ -82,8 +82,15 @@ const typeDefs = gql`
         thread: Thread
         replyto: Post
         replies: Int
+        likes: [Like]
         createdAt: String
         updatedAt: String
+    }
+
+    type Like @key(fields: "id") {
+        id: ID!
+        username: String
+        createdAt: String
     }
 `
 export default typeDefs

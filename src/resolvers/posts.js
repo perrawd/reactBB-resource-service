@@ -145,16 +145,18 @@ const postResolvers = {
      */
     addLikes: async (_, args, context) => {
       try {
-        const user = authUser(context)
-        console.log(user)
+        const { username } = authUser(context)
+        // console.log(user)
         console.log(args)
-        await Post.findByIdAndUpdate(
-          args.id,
-          {
-            $push: { likes: user.username }
-          },
-          { useFindAndModify: false }
-        )
+        const post = await Post.findById(args.id)
+
+        post.likes.find((like) => like.username === username)
+          ? post.likes = post.likes.filter((like) => like.username !== username)
+          : post.likes.push({
+            username
+          })
+
+        await post.save()
 
         return {
           success: true,

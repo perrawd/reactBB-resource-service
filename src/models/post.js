@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Thread'
   },
+  isEdited: {
+    type: Boolean,
+    default: false
+  },
   replies: {
     type: Number,
     default: 0

@@ -31,7 +31,7 @@ const typeDefs = gql`
         deleteThread(id: ID!): UpdateResponse!
         addPost(body: String!, author: String, thread: String, replyto: ID): Post!
         addLikes(id: ID!): UpdateResponse!
-        editPost(id: ID!, body: String!, thread: String): UpdateResponse!
+        editPost(id: ID!, body: String!, thread: String, isEdited: Boolean): UpdateResponse!
         deletePost(id: ID!): UpdateResponse!
     }
 
@@ -83,6 +83,7 @@ const typeDefs = gql`
         replyto: Post
         replies: Int
         likes: [Like]
+        isEdited: Boolean
         createdAt: String
         updatedAt: String
     }

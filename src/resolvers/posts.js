@@ -1,5 +1,5 @@
 /**
- * GraphQL posts resolver.
+ * GraphQL Posts resolver.
  *
  * @author Per Rawdin
  * @version 1.0.0
@@ -10,13 +10,12 @@ import { Post } from '../models/post.js'
 import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
-// Provide resolver functions for your schema fields
 const postResolvers = {
   Query: {
-    /**
+  /**
    * Get all posts.
    *
-   * @returns {object} the posts.
+   * @returns {object} Posts documents.
    */
     async getPosts () {
       try {
@@ -35,15 +34,16 @@ const postResolvers = {
      */
     async getPostByID (_, args) {
       try {
-        const posts = Post.findById(args.id)
-        return posts
+        const post = Post.findById(args.id)
+
+        return post
       } catch (err) {
         throw new Error(err)
       }
     }
   },
   Mutation: {
-    /**
+  /**
    * Add post.
    *
    * @param {object} _ parent.
@@ -54,6 +54,7 @@ const postResolvers = {
     addPost: async (_, args, context) => {
       try {
         const user = authUser(context)
+
         const response = await Post.create({
           ...args,
           author: user.username
@@ -88,11 +89,12 @@ const postResolvers = {
      * @param {object} _ parent.
      * @param {object} args arguments.
      * @param {object} context context.
-     * @returns {object} The created post.
+     * @returns {object} Response object.
      */
     editPost: async (_, args, context) => {
       try {
         authUser(context)
+
         await Post.updateOne(
           { _id: args.id },
           {
@@ -113,12 +115,12 @@ const postResolvers = {
      * @param {object} _ parent.
      * @param {object} args arguments.
      * @param {object} context context.
-     * @returns {object} a response.
+     * @returns {object} Response object.
      */
     deletePost: async (_, args, context) => {
       try {
         const user = authUser(context)
-        console.log(user)
+
         const post = await Post.findOne({ _id: args.id })
 
         if (post.author === user.username) {
@@ -141,13 +143,12 @@ const postResolvers = {
      * @param {object} _ parent.
      * @param {object} args arguments.
      * @param {object} context context.
-     * @returns {object} a response.
+     * @returns {object} Response object.
      */
     addLikes: async (_, args, context) => {
       try {
         const { username } = authUser(context)
-        // console.log(user)
-        console.log(args)
+
         const post = await Post.findById(args.id)
 
         post.likes.find((like) => like.username === username)
@@ -169,19 +170,19 @@ const postResolvers = {
   },
   Post: {
     /**
-     * Return object of threads.
+     * Populates the category field in the Post model.
      *
-     * @param {object} post the parent.
-     * @returns {object} The object.
+     * @param {object} post the Post model.
+     * @returns {object} the populated field.
      */
     thread: async (post) => {
       return (await post.populate('thread').execPopulate()).thread
     },
     /**
-     * Return object of threads.
+     * Populates the category field in the Post model.
      *
-     * @param {object} subcategory the parent.
-     * @returns {object} The object.
+     * @param {object} subcategory the Post model.
+     * @returns {object} the populated field.
      */
     replyto: async (subcategory) => {
       return (await subcategory.populate('replyto').execPopulate()).replyto

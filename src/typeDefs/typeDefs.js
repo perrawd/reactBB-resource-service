@@ -7,7 +7,9 @@
 
 import { gql } from 'apollo-server-express'
 
-// Construct a schema, using GraphQL schema language
+/*
+ * Constructs a GraphQL schema.
+ */
 const typeDefs = gql`
     extend type Query {
         getCategories: [Category]

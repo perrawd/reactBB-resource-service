@@ -10,10 +10,10 @@ import jwt from 'jsonwebtoken'
 import { AuthenticationError } from 'apollo-server-express'
 
 /**
- * Auth.
+ * Authentification middleware.
  *
  * @param {object} context context.
- * @returns {object} The user.
+ * @returns {object} User object.
  */
 const authUser = (context) => {
   try {

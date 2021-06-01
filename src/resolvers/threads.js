@@ -17,11 +17,12 @@ const threadsResolvers = {
   /**
    * Get all Threads.
    *
-   * @returns {object} The server app.
+   * @returns {object} The Thread document.
    */
     async getThreads () {
       try {
         const threads = Thread.find()
+
         return threads
       } catch (err) {
         throw new Error(err)
@@ -32,11 +33,12 @@ const threadsResolvers = {
      *
      * @param {object} _ parent.
      * @param {object} args object to search for.
-     * @returns {object} The server app.
+     * @returns {object} The Thread document.
      */
     async getThreadByID (_, args) {
       try {
         const thread = Thread.findById(args.id)
+
         return thread
       } catch (err) {
         throw new Error(err)
@@ -50,23 +52,30 @@ const threadsResolvers = {
    * @param {object} _ parent.
    * @param {object} args object to create.
    * @param {object} context object to create.
-   * @returns {object} The object.
+   * @returns {object} The Thread document.
    */
     addThread: async (_, args, context) => {
       try {
-        console.log('thread test')
         const user = authUser(context)
-        console.log(user)
+
         const response = await Thread.create({
           ...args,
           author: user.username
         })
+
+        /*
+         * Updates first Post document with Thread.
+         */
         await Post.findByIdAndUpdate(response.posts,
           {
             $set: { thread: response._id }
           },
           { useFindAndModify: false }
         )
+
+        /*
+         * Appends Subcategory document with Thread.
+         */
         await Subcategory.findByIdAndUpdate(response.subcategory,
           {
             $push: { threads: response._id }
@@ -85,7 +94,7 @@ const threadsResolvers = {
      * @param {object} _ parent.
      * @param {object} args object to create.
      * @param {object} context object to create.
-     * @returns {object} The object.
+     * @returns {object} Response object.
      */
     deleteThread: async (_, args, context) => {
       try {
@@ -109,19 +118,19 @@ const threadsResolvers = {
   },
   Thread: {
     /**
-     * Return object of threads.
+     * Populates the subcategory field in the Thread model.
      *
-     * @param {object} thread the parent.
-     * @returns {object} The object.
+     * @param {object} thread the Thread model.
+     * @returns {object} the populated field.
      */
     subcategory: async (thread) => {
       return (await thread.populate('subcategory').execPopulate()).subcategory
     },
     /**
-     * Return object of threads.
+     * Populates the posts field in the Thread model.
      *
-     * @param {object} thread the parent.
-     * @returns {object} The object.
+     * @param {object} thread the Thread model.
+     * @returns {object} the populated field.
      */
     posts: async (thread) => {
       return (await thread.populate('posts').execPopulate()).posts

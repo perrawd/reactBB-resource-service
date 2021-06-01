@@ -9,7 +9,6 @@ import { Category } from '../models/category.js'
 import { AuthenticationError } from 'apollo-server-express'
 import authUser from '../utils/auth.js'
 
-// Provide resolver functions for your schema fields
 const categoryResolvers = {
   Query: {
   /**
@@ -19,8 +18,8 @@ const categoryResolvers = {
    */
     async getCategories () {
       try {
-        const category = Category.find()
-        return category
+        const categories = Category.find()
+        return categories
       } catch (err) {
         throw new Error(err)
       }
@@ -35,6 +34,7 @@ const categoryResolvers = {
     async getCategoryByID (_, args) {
       try {
         const category = Category.findById(args.id)
+
         return category
       } catch (err) {
         throw new Error(err)
@@ -54,10 +54,12 @@ const categoryResolvers = {
       try {
         console.log('Category test')
         const user = authUser(context)
+
         const response = await Category.create({
           ...args,
           author: user.id
         })
+
         return response
       } catch (err) {
         throw new Error(err)
@@ -74,6 +76,7 @@ const categoryResolvers = {
     editCategory: async (_, args, context) => {
       try {
         authUser(context)
+
         await Category.updateOne(
           { _id: args.id },
           {

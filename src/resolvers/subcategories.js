@@ -14,12 +14,12 @@ const subcategoryResolvers = {
   /**
    * Get all SubCategories.
    *
-   * @returns {object} The server app.
+   * @returns {object} Subcategory document.
    */
     async getSubCategories () {
       try {
         const subcategories = Subcategory.find()
-        console.log(subcategories)
+
         return subcategories
       } catch (err) {
         throw new Error(err)
@@ -30,13 +30,12 @@ const subcategoryResolvers = {
      *
      * @param {object} _ parent.
      * @param {object} args arguments.
-     * @returns {object} The server app.
+     * @returns {object} Subcategory document.
      */
     async getSubCategoryByID (_, args) {
       try {
         const subcategory = Subcategory.findOne({ _id: args.id })
-        // const category = Subcategory.findById(args.id)
-        console.log((await subcategory).toObject())
+
         return subcategory
       } catch (err) {
         throw new Error(err)
@@ -50,7 +49,7 @@ const subcategoryResolvers = {
    * @param {object} _ parent.
    * @param {object} args arguments.
    * @param {object} context context.
-   * @returns {object} The object.
+   * @returns {object} Response object.
    */
     addSubCategory: async (_, args, context) => {
       try {
@@ -72,12 +71,11 @@ const subcategoryResolvers = {
           message: 'Subcategory added'
         }
       } catch (err) {
-        console.error(err)
         throw new Error(err)
       }
     },
     /**
-     * Update category.
+     * Update SubCategory.
      *
      * @param {object} _ parent.
      * @param {object} args arguments.
@@ -107,7 +105,7 @@ const subcategoryResolvers = {
      * @param {object} _ parent.
      * @param {object} args arguments.
      * @param {object} context context.
-     * @returns {object} The object.
+     * @returns {object} Response object.
      */
     deleteSubcategory: async (_, args, context) => {
       try {
@@ -127,19 +125,19 @@ const subcategoryResolvers = {
   },
   Subcategory: {
     /**
-     * Return object of threads.
+     * Populates the threads field in the Subcategory model.
      *
-     * @param {object} subcategory the parent.
-     * @returns {object} The object.
+     * @param {object} subcategory the Subcategory model.
+     * @returns {object} the populated field.
      */
     threads: async (subcategory) => {
       return (await subcategory.populate('threads').execPopulate()).threads
     },
     /**
-     * Return object of threads.
+     * Populates the category field in the Subcategory model.
      *
-     * @param {object} subcategory the parent.
-     * @returns {object} The object.
+     * @param {object} subcategory the Subcategory model.
+     * @returns {object} the pupulated field.
      */
     category: async (subcategory) => {
       return (await subcategory.populate('category').execPopulate()).category

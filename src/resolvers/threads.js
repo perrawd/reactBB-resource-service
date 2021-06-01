@@ -83,6 +83,16 @@ const threadsResolvers = {
           { useFindAndModify: false }
         )
 
+        /*
+         * Set Subcategory latest field with Thread.
+         */
+        await Subcategory.findByIdAndUpdate(response.subcategory,
+          {
+            $set: { latest: response._id }
+          },
+          { useFindAndModify: false }
+        )
+
         return response
       } catch (err) {
         throw new Error(err)

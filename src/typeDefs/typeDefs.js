@@ -59,6 +59,7 @@ const typeDefs = gql`
         category: Category
         threads: [Thread]
         threadCount: Int
+        latest: Thread
         author: String!
         createdAt: String
         updatedAt: String

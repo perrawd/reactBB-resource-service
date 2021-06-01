@@ -35,7 +35,7 @@ const subcategoryResolvers = {
     async getSubCategoryByID (_, args) {
       try {
         const subcategory = Subcategory.findOne({ _id: args.id })
-
+        console.log((await subcategory).toJSON())
         return subcategory
       } catch (err) {
         throw new Error(err)
@@ -137,10 +137,19 @@ const subcategoryResolvers = {
      * Populates the category field in the Subcategory model.
      *
      * @param {object} subcategory the Subcategory model.
-     * @returns {object} the pupulated field.
+     * @returns {object} the populated field.
      */
     category: async (subcategory) => {
       return (await subcategory.populate('category').execPopulate()).category
+    },
+    /**
+     * Populates the category field in the Subcategory model.
+     *
+     * @param {object} subcategory the Subcategory model.
+     * @returns {object} the populated field.
+     */
+    latest: async (subcategory) => {
+      return (await subcategory.populate('latest').execPopulate()).latest
     }
   }
 }

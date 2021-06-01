@@ -26,6 +26,10 @@ const schema = new mongoose.Schema({
       ref: 'Thread'
     }
   ],
+  latest: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Thread'
+  },
   author: {
     type: String
   }

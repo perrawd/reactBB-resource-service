@@ -52,7 +52,6 @@ const categoryResolvers = {
    */
     addCategory: async (_, args, context) => {
       try {
-        console.log('Category test')
         const user = authUser(context)
 
         const response = await Category.create({
@@ -102,7 +101,7 @@ const categoryResolvers = {
     deleteCategory: async (_, args, context) => {
       try {
         const user = authUser(context)
-        console.log(user)
+
         const category = await Category.findOne({ _id: args.id })
 
         if (category.author === user.id) {

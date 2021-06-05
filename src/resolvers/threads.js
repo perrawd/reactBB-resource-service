@@ -11,7 +11,9 @@ import { AuthenticationError } from 'apollo-server-express'
 import { Subcategory } from '../models/subcategory.js'
 import { Post } from '../models/post.js'
 
-// Provide resolver functions for your schema fields
+/**
+ * Resolver functions
+ */
 const threadsResolvers = {
   Query: {
   /**
@@ -111,7 +113,10 @@ const threadsResolvers = {
         const user = authUser(context)
         const thread = await Thread.findOne({ _id: args.id })
 
-        if (thread.author === user) {
+        if (thread.author === user || user.role === 'MODERATOR') {
+          thread.posts.forEach(async post => {
+            await Post.findByIdAndDelete(post.id)
+          })
           thread.remove()
 
           return {

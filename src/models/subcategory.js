@@ -7,7 +7,6 @@
 
 import mongoose from 'mongoose'
 
-// Create a schema.
 const schema = new mongoose.Schema({
   title: {
     type: String,
@@ -49,12 +48,8 @@ schema.virtual('last').get(function () {
 
 schema.virtual('latestThread', {
   ref: 'Thread',
-  localField: schema.virtual('last').get(function () {
-    return this.threads[this.threads.length - 1]
-  }),
-  foreignField: '_id',
-  justOne: true
+  localField: 'threads',
+  foreignField: '_id'
 })
 
-// Create a model using the schema.
 export const Subcategory = mongoose.model('Subcategory', schema)

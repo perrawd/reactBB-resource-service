@@ -9,6 +9,9 @@ import { Category } from '../models/category.js'
 import { AuthenticationError } from 'apollo-server-express'
 import authUser from '../utils/auth.js'
 
+/**
+ * Resolver functions
+ */
 const categoryResolvers = {
   Query: {
   /**

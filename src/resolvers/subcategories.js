@@ -8,7 +8,9 @@ import authUser from '../utils/auth.js'
 import { Subcategory } from '../models/subcategory.js'
 import { Category } from '../models/category.js'
 
-// Provide resolver functions for your schema fields
+/**
+ * Resolver functions
+ */
 const subcategoryResolvers = {
   Query: {
   /**

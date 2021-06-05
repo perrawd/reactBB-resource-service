@@ -7,7 +7,6 @@
 
 import mongoose from 'mongoose'
 
-// Create a schema.
 const schema = new mongoose.Schema({
   title: {
     type: String,
@@ -39,5 +38,4 @@ schema.virtual('postCount').get(function () {
   return this.posts.length
 })
 
-// Create a model using the schema.
 export const Thread = mongoose.model('Thread', schema)

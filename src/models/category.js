@@ -7,7 +7,6 @@
 
 import mongoose from 'mongoose'
 
-// Create a schema.
 const schema = new mongoose.Schema({
   title: {
     type: String,
@@ -30,5 +29,4 @@ const schema = new mongoose.Schema({
   timestamps: true
 })
 
-// Create a model using the schema.
 export const Category = mongoose.model('Category', schema)

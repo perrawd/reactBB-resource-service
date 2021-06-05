@@ -7,7 +7,6 @@
 
 import mongoose from 'mongoose'
 
-// Create a schema.
 const schema = new mongoose.Schema({
   body: {
     type: String,
@@ -42,5 +41,4 @@ const schema = new mongoose.Schema({
   timestamps: true
 })
 
-// Create a model using the schema.
 export const Post = mongoose.model('Post', schema)

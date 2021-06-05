@@ -10,6 +10,9 @@ import { Post } from '../models/post.js'
 import { Thread } from '../models/thread.js'
 import { AuthenticationError } from 'apollo-server-express'
 
+/**
+ * Resolver functions
+ */
 const postResolvers = {
   Query: {
   /**
